@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        html {
+            background-color: #333;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+        }
+        .container h2 {
+            font-size: 42px;
+        }
+
+        .header {
+            display: flex;
+        }
+
+        .input-txt {
+            width: 320px;
+            height: 50px;
+            font-size: 32px;
+            align-content: center;
+            margin: 20px auto;
+            direction: rtl;
+        }
+
+        .input-txt {
+            width: 305px;
+        }
+
+        .num-btn-list {
+            width: fit-content;
+            height: fit-content;
+            display: flex;
+            justify-content: center;
+            background-color: #333;
+            margin: auto;
+
+        }
+
+        .nums {
+            display: grid;
+            grid-gap: 20px;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(4, 1fr);
+        }
+
+        .clear-btn,
+        .input-btn,
+        .play-btn,
+        .reset-btn {
+            transition: background-color 0.3s ease;
+            align-items: center;
+            background-color: rgb(236, 152, 6);
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            font-size: 32px;
+            height: 80px;
+            justify-content: center;
+            width: 80px;
+        }
+
+        .play-btn {
+            margin-left: -30px;
+        }
+
+        .num-btn {
+            transition: 0.3s ease;
+            align-items: center;
+            background-color: #ccc;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            font-size: 32px;
+            height: 80px;
+            justify-content: center;
+            width: 80px;
+        }
+
+        .num-btn:hover {
+            background-color: #ffa;
+        }
+
+        .input-btn:hover {
+            background-color: #ffa;
+        }
+
+        .play-btn:hover {
+            background-color: #ffa;
+        }
+
+        .reset-btn:hover {
+            background-color: #ffa;
+        }
+
+        .locked {
+            display: none;
+            background-color: #aaa;
+            cursor: not-allowed;
+        }
+
+        .play-btn.locked {
+            display: none;
+        }
+
+        .displayDiv {
+            width: 331px;
+            font-size: 28px;
+            position: absolute;
+            right: 380px;
+            text-align: start;
+            text-wrap: wrap;
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+        <div class="wrap">
+            <h2>終極密碼猜數字遊戲</h2>
+            <div class="input-txt">按下開始</div>
+            <div class="num-btn-list">
+                <div class="nums">
+                    <div class="num-btn locked">7</div>
+                    <div class="num-btn locked">8</div>
+                    <div class="num-btn locked">9</div>
+                    <div class="num-btn locked">4</div>
+                    <div class="num-btn locked">5</div>
+                    <div class="num-btn locked">6</div>
+                    <div class="num-btn locked">1</div>
+                    <div class="num-btn locked">2</div>
+                    <div class="num-btn locked">3</div>
+                    <div class="num-btn locked">0</div>
+                    <div class="input-btn locked">輸入</div>
+                    <div class="reset-btn locked">重來</div>
+                </div>
+                <div class="play-btn">開始</div>
+
+                <div class="displayDiv"></div>
+            </div>
+
+        </div>
+
+    </div>
+    <script>
+        const playBtn = document.querySelector(".play-btn");
+        const inputBtn = document.querySelector(".input-btn");
+        const resetBtn = document.querySelector(".reset-btn");
+        const numBtn = document.querySelectorAll(".num-btn");
+        const displayDiv = document.querySelector(".displayDiv");
+        let lockedBtn = document.querySelectorAll(".locked");
+        let inputTxt = document.querySelector(".input-txt");
+
+        let password;
+        let guessNum;
+        let small ;
+        let large ;
+        let isCorrect;
+        let isSmall;
+        let isStart;
+
+        playBtn.addEventListener("click", gamesStart);
+        inputBtn.addEventListener("click", compareInput);
+        resetBtn.addEventListener("click", reset);
+
+
+        function getRandomNum(num) {
+            let theNum = Math.floor(Math.random() * (num + 1));
+            return theNum;
+        }
+
+        function gamesStart() {
+            isStart = true;
+            openBtn();
+            password = getRandomNum(100);
+            displayDiv.textContent = "遊戲開始";
+            inputTxt.textContent = "";
+            small = 0;
+            large = 100;
+        }
+
+        function reset() {
+            gamesStart();
+            displayDiv.textContent = "";
+        }
+
+        function compareInput() {
+            compare();
+            if (isSmall) small = guessNum;
+            else large = guessNum;
+            displayDiv.textContent = getMessage();
+            if (isCorrect) lockBtn();
+        }
+
+        function compare() {
+            guessNum = inputTxt.innerHTML;
+            isCorrect = (guessNum == password);
+            isSmall = (guessNum < password);
+        }
+
+        function getMessage() {
+            let message =  isCorrect ? (`輸入:${password}, 與答案: ${password} 一致 恭喜答對!`) :
+                (isSmall ? `輸入 ${small} 到 ${large} 之間` : `輸入 ${small} 到 ${large}之間`)
+            inputTxt.textContent = "";
+            return message;
+        }
+
+
+        function openBtn() {
+            lockedBtn.forEach(b => {
+                b.classList.remove("locked");
+            })
+            playBtn.classList.add("locked");
+        }
+
+        function lockBtn() {
+            lockedBtn.forEach(b => {
+                b.classList.add("locked");
+            })
+            playBtn.classList.remove("locked");
+        }
+
+
+        numBtn.forEach(function (Btn) {
+            Btn.addEventListener("click", function () {
+                var number = Btn.textContent;
+                inputTxt.textContent += number;
+            })
+        })
+
+    </script>
+</body>
+
+</html>
