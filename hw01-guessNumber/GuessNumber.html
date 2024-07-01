@@ -235,8 +235,9 @@
             Btn.addEventListener("click", function () {
                 var number = Btn.textContent;
                 inputTxt.textContent += number;
+                if ( inputTxt.textContent>100) inputTxt.textContent=100;
             })
-        })
+        })Ï
 
     </script>
 </body>
