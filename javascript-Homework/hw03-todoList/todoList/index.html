@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <style>
+        .section1 {
+            display: flex;
+            width: 50%;
+            margin: auto;
+            align-items: center;
+            justify-content: space-between;
+            border: 1px solid #ccc;
+        }
+
+        .form-control.todo-text,
+        .input-group .input-group-text {
+            margin-top: 16px;
+        }
+
+        .section1 .input-group {
+            flex-grow: 1;
+            margin-right: 10px;
+        }
+
+        .section1 .btn {
+            margin-right: 5px;
+            height: 38px;
+
+            line-height: 1.5;
+
+            display: inline-flex;
+
+            align-items: center;
+            justify-content: center;
+            padding: 0 10px;
+
+            white-space: nowrap;
+
+        }
+
+        .section1 .form.control {
+            border: 1px solid #fa0;
+        }
+
+        .input-group {
+            margin: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="input-group mb-3 w-50">
+        <input type="text" id="input-box" class="form-control" placeholder="todo...">
+        <button class="btn btn-primary " type="button" id="add-btn" style="color: white;">新增</button>
+    </div>
+    <!-- ================ -->
+    <div id="todo-list-container">
+        <!-- 這裡放置生成的代辦事項-->
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
+        integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
+        integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13"
+        crossorigin="anonymous"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const inputBox = document.querySelector("#input-box");
+            const addBtn = document.querySelector("#add-btn");
+            const todoListContainer = document.querySelector("#todo-list-container");
+
+            // 加載LocalStorage中的代辦事項
+            loadTodosFromLocalStorage();
+
+            // 新增代辦事項
+            addBtn.addEventListener('click', function () {
+                const todoText = inputBox.value.trim();
+
+                if (todoText !== '') {
+                    addTodoItem(todoText);
+                    inputBox.value = ''; // 清空輸入框
+                    saveTodosToLocalStorage();
+                }
+            });
+
+            // 使用事件委托處理編輯和删除按紐的點擊事件
+            todoListContainer.addEventListener('click', function (event) {
+                const target = event.target;
+                const todoItem = target.parentElement;
+
+                if (target.classList.contains('edit-btn')) {
+                    const checkbox = todoItem.querySelector('.form-check-input');
+                    if (checkbox.checked) {
+                        toggleEditMode(target);
+                        saveTodosToLocalStorage();
+                    } else {
+                        alert('請先選中代辦事項！');
+                    }
+                } else if (target.classList.contains('delete-btn')) {
+                    const checkbox = todoItem.querySelector('.form-check-input');
+                    if (checkbox.checked) {
+                        deleteTodoItem(todoItem);
+                        saveTodosToLocalStorage();
+                    } else {
+                        alert('請先選中代辦事項！');
+                    }
+                }
+            });
+
+            // 添加代辦事項到列表中
+            function addTodoItem(todoText) {
+                const todoItem = `
+                        <div class="section1">
+                            <div class="input-group mb-3">
+                                <div class="input-group-text">
+                                    <input class="form-check-input mt-0" type="checkbox" value=""
+                                        aria-label="Checkbox for following text input">
+                                </div>
+                                <input type="text" class="form-control todo-text" aria-label="Text input with checkbox"
+                                    value="${todoText}" readonly>
+                            </div>
+                            <button type="button" class="btn btn-warning edit-btn">編輯</button>
+                            <button type="button" class="btn btn-danger delete-btn">刪除</button>
+                        </div>
+                    `;
+
+                todoListContainer.insertAdjacentHTML('beforeend', todoItem);
+            }
+
+            // 切换編輯模式
+            function toggleEditMode(button) {
+                const todoItem = button.parentElement;
+                const todoTextElement = todoItem.querySelector('.todo-text');
+
+                if (button.textContent === '編輯') {
+                    button.textContent = '保存';
+                    todoTextElement.readOnly = false;
+                } else {
+                    button.textContent = '編輯';
+                    todoTextElement.readOnly = true;
+                }
+            }
+
+            // 删除代辦事項項目
+            function deleteTodoItem(todoItem) {
+                todoItem.remove();
+            }
+
+            //將代辦事項保存到LocalStorage       
+            function saveTodosToLocalStorage() {
+                const todos = [];
+                document.querySelectorAll('.section1').forEach(item => {
+                    const todoText = item.querySelector('.todo-text').value;
+                    todos.push(todoText);
+                });
+                localStorage.setItem('todos', JSON.stringify(todos));
+            }
+
+            // 从LocalStorage加載代辦事項
+            function loadTodosFromLocalStorage() {
+                const todos = JSON.parse(localStorage.getItem('todos')) || [];
+                todos.forEach(todoText => {
+                    addTodoItem(todoText);
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

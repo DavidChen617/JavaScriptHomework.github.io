@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar with To-Do List</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <style>
+        body {
+            background-color: rgb(25, 14, 14);
+            font-family: Arial, sans-serif;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
+
+        .calendar-container {
+            width: 1200px;
+            margin: auto;
+            text-align: center;
+            color: white;
+            margin-top: 10px;
+            height: 670px;
+            /* border: 1px solid red; */
+        }
+
+        .day {
+            width: 40px;
+            height: 40px;
+            display: inline-block;
+            margin: 2px;
+            text-align: center;
+            vertical-align: top;
+            line-height: 40px;
+        }
+
+        /* 今天的日期樣式 */
+        .today {
+            background-color: #ff0;
+            border-radius: 12px;
+            font-weight: bold;
+            color: #000;
+            text-align: center;
+            line-height: 40px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+
+
+        .today::before {
+            content: '';
+
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: 15px;
+
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+
+            opacity: 0;
+
+            transition: opacity 0.3s ease;
+
+        }
+
+        .today:hover::before {
+            opacity: 1;
+
+        }
+
+        .today:hover {
+            background: linear-gradient(145deg, #ffc107, #ffeb3b);
+
+            transform: scale(1.05);
+
+        }
+
+        .cal-month {
+            color: rgb(213, 14, 14);
+            font-size: 3rem;
+            margin-bottom: 20px;
+            cursor: pointer;
+        }
+
+        .cal-week {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            height: 40px;
+            border-bottom: #ccc 1px solid;
+        }
+
+        .cal-day {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            grid-template-rows: repeat(6, 1fr);
+            height: 35rem;
+
+        }
+
+        .cal-day div {
+            border-bottom: 1px #ccc solid;
+            margin-top: 20px;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .cal-day div:empty {
+            pointer-events: none;
+        }
+
+        .cal-day div:not(:empty):hover {
+            background-color: #fa0;
+            border-radius: 10%;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: space-between;
+            width: 1200px;
+            margin: auto;
+            margin-top: 30px;
+
+        }
+
+        .btn {
+            padding: 12px 24px;
+            background-color: #ff9800;
+
+            border: none;
+            border-radius: 8px;
+
+            color: #fff;
+            font-size: 1.1rem;
+            font-weight: 600;
+
+            text-transform: uppercase;
+
+            cursor: pointer;
+            transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+
+        }
+
+        .btn:hover {
+            background-color: #fb8c00;
+
+            transform: scale(1.05);
+
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+
+        }
+
+        .btn:active {
+            background-color: #f57c00;
+
+            transform: scale(0.98);
+
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+
+        }
+
+
+        .btn-next {
+            animation: slideInRight 0.5s ease-out;
+        }
+
+        .btn-prev {
+            animation: slideInLeft 0.5s ease-out;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(30px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                transform: translateX(-30px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        #modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 400px;
+            top: 100px;
+            width: 80%;
+            margin: auto;
+            display: flex;
+            /* justify-content: center; */
+
+        }
+
+        .modal-content {
+            /* display: none; */
+            background-color: #ccc;
+            width: 50%;
+            padding: 20px;
+            border-radius: 20px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            animation: slideIn 0.4s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(100%);
+            }
+
+            to {
+                transform: translateY(0);
+            }
+        }
+
+        .close-btn {
+            color: #888;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            align-self: flex-end;
+        }
+
+        .close-btn:hover,
+        .close-btn:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        input[type="text"],
+        input[type="color"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-top: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        .add-btn,
+        .save-btn {
+            margin-top: 10px;
+            padding: 10px;
+            width: 100%;
+            cursor: pointer;
+            border: none;
+            border-radius: 8px;
+            background-color: #fa0;
+            color: #fff;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        .add-btn:hover,
+        .save-btn:hover {
+            background-color: #005bb5;
+        }
+
+        .save-btn {
+            display: none;
+        }
+
+        #todo-list {
+            list-style-type: none;
+            padding: 0;
+            width: 100%;
+        }
+
+        #todo-list li {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
+        .todo-item {
+            flex-grow: 1;
+        }
+
+        .edit-btn,
+        .delete-btn,
+        .cancel-btn {
+            margin-left: 10px;
+            cursor: pointer;
+            border: none;
+            background-color: transparent;
+            color: #005bb5;
+            font-size: 16px;
+        }
+
+        .edit-btn:hover,
+        .delete-btn:hover,
+        .cancel-btn:hover {
+            color: red;
+        }
+
+        ;
+
+        .todo-item-template {
+            display: flex;
+        }
+
+        .list-group-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 10px;
+            /* Adjust the gap between buttons as needed */
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="calendar-container">
+        <!-- Calendar will be dynamically i;serted here -->
+    </div>
+
+    <div class="modal" id="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2>To-Do List for <span id="modal-date"></span></h2>
+            <ul id="todo-list-group"> </ul>
+            <!-- To-Do items will be added here dynamically -->
+            <template id="todo-item-template">
+                <li class="list-group-item">
+                    <div class="todo-txt">
+                        <span class="todo-time" style="margin-left: -36px;"></span>
+                        <span class="todo-at" style="margin: 0 30px;"></span>
+                        <span class="todo-task"></span>
+
+                    </div>
+                    <div class="button-group">
+                        <button class="edit-btn">Edit</button>
+                        <button class="delete-btn">Delete</button>
+                    </div>
+                </li>
+            </template>
+
+            <input type="time" id="todo-time" required>
+            <input type="text" id="todo-at" placeholder="Location">
+            <input type="text" id="todo-task" placeholder="Task">
+            <input type="color" id="todo-color" value="#ff0000">
+            <button class="add-btn">Add</button>
+            <button class="save-btn">Save</button>
+        </div>
+    </div>
+
+    <div class="btn-container">
+        <button class="btn" id="prev-btn">Prev</button>
+        <button class="btn" id="next-btn">Next</button>
+    </div>
+
+    <script>
+        let currentMonth = new Date().getMonth() + 1;
+        let currentYear = new Date().getFullYear();
+        const calendarContainer = document.querySelector('.calendar-container');
+
+        const monthNames = ["Dec", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov"];
+        const weekDays = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+
+        document.getElementById('next-btn').addEventListener('click', () => { getNextMonth() });
+        document.getElementById('prev-btn').addEventListener('click', getPrevMonth);
+
+        updateCalendar(currentYear, currentMonth);
+
+        function getNextMonth() {
+            calendarContainer.innerHTML = "";
+            currentMonth++;
+            if (currentMonth > 11) {
+                currentMonth = 0;
+                currentYear++;
+            }
+            updateCalendar(currentYear, currentMonth);
+        }
+
+        function getPrevMonth() {
+            calendarContainer.innerHTML = "";
+            currentMonth--;
+            if (currentMonth < 0) {
+                currentMonth = 11;
+                currentYear--;
+            }
+            updateCalendar(currentYear, currentMonth);
+        }
+
+        function getFirstDay(year, month) {
+            const startDay = new Date(year, month, 1).getDay();
+            return startDay;
+        }
+
+        function getLastDay(year, month) {
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            return daysInMonth;
+        }
+
+        function getMonthDiv(year, month) {
+            const monthName = monthNames[month];
+            const calMonth = document.createElement('div');
+            calMonth.className = 'cal-month';
+            calMonth.textContent = `${monthName} ${year}`;
+            return calMonth;
+        }
+
+        function getWeekDiv() {
+            const calWeek = document.createElement('div');
+            calWeek.className = 'cal-week';
+            weekDays.forEach(day => {
+                const div = document.createElement('div');
+                div.textContent = day;
+                calWeek.appendChild(div);
+            });
+            return calWeek;
+        }
+
+        function getDayDiv(firstDay, daysInMonth) {
+            const calDay = document.createElement('div');
+            calDay.className = 'cal-day';
+
+            for (let i = 0; i < firstDay; i++) {
+                const emptyDiv = document.createElement('div');
+                calDay.appendChild(emptyDiv);
+            }
+
+            for (let day = 1; day <= daysInMonth; day++) {
+                const dayDiv = document.createElement('div');
+
+
+                dayDiv.dataset.date = `${currentYear}${currentMonth.toString().padStart(2, '0')}${day.toString().padStart(2, '0')}`;
+
+                dayDiv.textContent = day;
+
+                calDay.appendChild(dayDiv);
+
+                dayDiv.addEventListener('click', (e) => openModal(e));//每個日期欄位掛上事件
+            }
+            return calDay;
+        }
+
+
+        function updateCalendar(year, month) {
+            const firstDay = getFirstDay(year, month);
+            const daysInMonth = getLastDay(year, month);
+            const monthDiv = getMonthDiv(year, month);
+            const weekDiv = getWeekDiv();
+            const dayDiv = getDayDiv(firstDay, daysInMonth);
+
+
+            calendarContainer.innerHTML = '';
+            calendarContainer.appendChild(monthDiv);
+            calendarContainer.appendChild(weekDiv);
+            calendarContainer.appendChild(dayDiv);
+
+
+            const today = new Date();
+            const todayYear = today.getFullYear();
+            const todayMonth = today.getMonth() + 1;
+            const todayDate = today.getDate();
+
+            // 選擇今天的日期格子，並給它設置特殊樣式
+            if (year === todayYear && month === todayMonth) {
+
+                const todaySelector = `[data-date="${todayYear}${(todayMonth).toString().padStart(2, '0')}${todayDate.toString().padStart(2, '0')}"]`;
+                console.log(todaySelector);
+                const todayElement = document.querySelector(todaySelector);
+
+                if (todayElement) {
+
+                    todayElement.classList.add('today');
+                }
+            }
+        }
+
+        const modal = document.getElementById("modal");
+        const closeModal = document.querySelector(".close-btn");
+
+
+        const key = 'todos'; //存入 localStorage 的key
+        const todoListGroup = document.getElementById("todo-list-group"); //代辦清單 ul
+        const todoItemTemplate = document.querySelector("#todo-item-template");  //template 動態生成模板
+        const addBtn = document.querySelector(".add-btn");
+        const saveBtn = document.querySelector(".save-btn");
+
+
+
+        function openModal(e) {  //日期格子的 event
+
+            const modal = document.querySelector("#modal");
+            modal.style.display = 'block';
+            let tar = e.target;
+            const modalDate = document.getElementById("modal-date");
+            modalDate.textContent = `${tar.outerText
+                } ${monthNames[currentMonth]} ${currentYear}`;
+            modal.style.display = "flex";
+
+
+            const targetDate = e.target.dataset.date;
+
+            rederingTodoList(targetDate);
+
+            setupAddBtn(targetDate);
+        }
+
+
+        function setupAddBtn(date) {
+            addBtn.addEventListener('click', () => {
+                addTodoItem(date);
+
+            });
+        }
+
+
+
+        closeModal.addEventListener('click', () => {
+            modal.style.display = "none";
+        });
+
+        window.addEventListener('click', (event) => {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        });
+
+        function addTodoItem(date) {
+
+            const item = getTodoInputs();
+
+            if (!item.isValid) { alert('Field cannot be empty!'); return; };
+
+            const todoItem = {
+                date: date,
+                id: new Date().valueOf(),
+                time: item.todoTime,
+                at: item.todoAt,
+                task: item.todoTask,
+            }
+
+            saveTodoItem(todoItem);
+            const todoItemDom = createTodoItemEl(todoItem);
+            todoListGroup.append(todoItemDom);
+            clearInput();
+        }
+
+        function rederingTodoList(date) {
+
+            const todoList = getTodoListFromStorage();
+            todoListGroup.innerHTML = "";
+            todoList.forEach((item) => {
+                if (item.date == date) {
+                    const todoItemDom = createTodoItemEl(item);
+                    todoListGroup.append(todoItemDom);
+                }
+            })
+        }
+
+        function saveTodoItem(item) {
+            const todoList = getTodoListFromStorage();
+            todoList.push(item);
+            saveTodoListToStorage(todoList);
+        }
+
+        function saveTodoListToStorage(todolist) {
+            const json = JSON.stringify(todolist);
+            localStorage.setItem(key, json)
+        }
+
+        function createTodoItemEl(todoitem) {
+            const todoItemEl = todoItemTemplate.content
+                .querySelector(".list-group-item")
+                .cloneNode(true);
+
+
+            todoItemEl.dataset.id = todoitem.id;
+
+            const time = todoItemEl.querySelector(".todo-txt .todo-time");
+            const at = todoItemEl.querySelector(".todo-txt .todo-at");
+            const task = todoItemEl.querySelector(".todo-txt .todo-task");
+            time.textContent = todoitem.time;
+            at.textContent = todoitem.at;
+            task.textContent = todoitem.task;
+
+            //每個創建出來的todo 掛上事件
+            todoItemEl.addEventListener("click", handleTodoItemClick);
+            // todoItemEl.addEventListener("click", save);
+
+            return todoItemEl;
+        }
+
+        function handleTodoItemClick(e) {
+            const targetEl = e.target;
+            const todoItemStrId = targetEl.closest("[data-id]").dataset.id;
+            const todoItemId = parseInt(todoItemStrId);
+
+
+            if (targetEl.classList.contains("edit-btn")) {
+                editTodo(todoItemId, targetEl);
+            }
+            else if (targetEl.classList.contains("delete-btn")) {
+                deleteTodo(todoItemId, targetEl);
+            }
+            else if (targetEl.classList.contains("cancel-btn")) {
+                cancelEdit(todoItemId, targetEl);
+            }
+            else { save(todoItemId, targetEl) }
+        }
+
+        function getTodoListFromStorage() {
+            const localStorageItem = localStorage.getItem(key);
+            return localStorageItem ? JSON.parse(localStorageItem) : [];
+        }
+
+        function getTodoInputs() {
+
+            const todoTime = document.querySelector('#todo-time').value.trim();
+            const todoAt = document.querySelector('#todo-at').value.trim();
+            const todoTask = document.querySelector('#todo-task').value.trim();
+
+            const isValid = todoTime && todoAt && todoTask;
+
+            return {
+                todoTime,
+                todoAt,
+                todoTask,
+                isValid
+            };
+        }
+
+
+        function save(id) {
+
+            const item = getTodoInputs();
+
+            if (!item.isValid) {
+                alert('欄位不能為空!');
+                // saveBtn.style.display = "none";
+                // addBtn.style.display = "block";
+                return;
+            }
+            const todoList = getTodoListFromStorage();
+
+            const index = todoList.findIndex((item) => item.id === id);
+            const date = todoList[index].date;
+            todoList[index].time = item.todoTime;
+            todoList[index].at = item.todoAt;
+            todoList[index].task = item.todoTask;
+
+            closeSaveBtn();
+            saveTodoListToStorage(todoList);
+            rederingTodoList(date);
+        }
+
+        let currentId;
+        function editTodo(id, el) {
+
+            el.textContent = "Cancel Edit"
+            el.className = "cancel-btn";
+
+            // 設定當前要保存的 ID
+            currentId = id;
+
+            addBtn.style.display = "none";
+            saveBtn.style.display = "block";
+            saveBtn.removeEventListener('click', handleSaveClick);
+            saveBtn.addEventListener('click', handleSaveClick);
+            // setSavebtn(id,el);
+
+            document.querySelectorAll(".edit-btn").forEach(x => { x.setAttribute('disabled', 'true') });
+            displayInfoInInput(el);
+        };
+
+        function handleSaveClick() {
+            save(currentId); // 使用全局或上下文中的 id
+        }
+
+
+        function displayInfoInInput(el) {
+            const todo = el.parentElement.parentElement;
+            const time = todo.querySelector('.todo-time').textContent;
+            const at = todo.querySelector('.todo-at').textContent;
+            const task = todo.querySelector('.todo-task').textContent;
+            const timebox = document.getElementById("todo-time");
+            const atbox = document.getElementById("todo-at");
+            const taskbox = document.getElementById("todo-task");
+            timebox.value = time;
+            atbox.value = at;
+            taskbox.value = task;
+        }
+
+        function cancelEdit(id, el) {
+            closeSaveBtn();
+            document.querySelectorAll(".edit-btn").forEach(x => { x.removeAttribute('disabled') });
+            el.textContent = "Edit";
+            el.className = "edit-btn";
+            document.querySelector(".edit-btn").removeAttribute('disabled');
+            clearInput();
+        }
+
+        function deleteTodo(id, el) {
+            closeSaveBtn();
+            const todoList = getTodoListFromStorage();
+            const todoItemIdx = todoList.findIndex((item) =>
+                item.id === id);
+            const date = todoList[todoItemIdx].date;
+            todoList.splice(todoItemIdx, 1);
+            saveTodoListToStorage(todoList);
+
+            rederingTodoList(date);
+            clearInput();
+        };
+        function clearInput() {
+            document.getElementById("todo-time").value = "";
+            document.getElementById("todo-at").value = "";
+            document.getElementById("todo-task").value = "";
+        };
+        function closeSaveBtn() {
+            saveBtn.style.display = "none";
+            addBtn.style.display = "block";
+        };
+    </script>
+</body>
+
+</html>
