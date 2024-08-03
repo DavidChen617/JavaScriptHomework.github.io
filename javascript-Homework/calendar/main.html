@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calendar</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="./style.css">
+
+</head>
+
+<body>
+    <div id="calendar-container">
+        <div id="calendar-header">
+            <button id="prev-month">◄</button>
+            <h2 id="month-year"></h2>
+            <button id="next-month">►</button>
+        </div>
+        <div id="calendar-body">
+            <div class="day-name">Sun</div>
+            <div class="day-name">Mon</div>
+            <div class="day-name">Tue</div>
+            <div class="day-name">Wed</div>
+            <div class="day-name">Thu</div>
+            <div class="day-name">Fri</div>
+            <div class="day-name">Sat</div>
+        </div>
+
+        <!--  Dynamically generated calendar-->
+        <div id="days">
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="modal" style="display: none;">
+        <div class="modal-header">
+            <div class="title">
+                <h3 class="modalDate"></h3>代辦事項
+            </div><button class="close-btn">X</button>
+        </div>
+        <ul class="modal-todoitem" id="todo-box">
+            <!-- Dynamically generated items -->
+                <template class="todo-item-template">
+                    <li class="todo-item" style=" list-style: none;">
+                        <div class="todo-input-group">
+                            <input type="text" class="displayInput" disabled />
+                            <button class="edit-btn" type="button">Edit</button>
+                            <button class="remove-btn" type="button">Delete</button>
+                        </div>
+                    </li>
+                </template>    
+        </ul>
+        <div class="modal-body">
+            <div class="time Input">
+                <h3>Time</h3>
+                <input type="time" id="time" name="appt" required />
+            </div>
+            <div class="todo Input">
+                <h3>to-do</h3>
+                <input type="text" aria-label="to-do" class="form-control" id="todo">
+            </div>
+            <div class="at Input ">
+                <h3>At</h3>
+                <input type="text" aria-label="to-do" class="form-control" id="At">
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div> <button class="add-btn">Add</button></div>
+            <button class="save-btn" type="button" style="display: none;"> Save</button>
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+
+    <script src="./main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,178 @@
+body {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    margin: 0;
+    background-color: #f0f0f0;
+}
+
+#calendar-container {
+   
+    height: 400px;
+    border: 1px solid #fff;
+    border-radius: 5px;
+   
+    background: #fff;
+
+}
+
+#calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background: #e4c47b;
+    color: #fff;
+}
+
+#calendar-header h2 {
+    margin: 0;
+}
+
+#calendar-body {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+}
+
+.day-name {
+    text-align: center;
+    padding: 5px;
+    background: #f0f0f0;
+    border: 1px solid #ddd;
+}
+
+#days {
+   
+    height: 400px;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    background: #fff;
+}
+
+
+.day {
+    position: relative;
+    text-align: center;
+    padding: 10px;
+    border: 1px solid #ddd;
+    background: #fff;
+    cursor: pointer;
+
+}
+
+
+.day:hover {
+    background-color: #f8d687;
+}
+
+.day:nth-child(7n) {
+    background: #f9f9f9;
+}
+
+.day:nth-child(7n):hover {
+    background: #f4d488;
+}
+
+.day:nth-child(7n+1) {
+    background: #f9f9f9;
+}
+
+.day:nth-child(7n+1):hover {
+    background: #f4d488;
+}
+
+
+#modal {
+    display: none;
+    border: 1px solid black;
+    width: 400px;
+    background-color: #E4C47B;
+    position: fixed;
+    margin-top: 200px;
+    
+}
+
+#modal .modal-header {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 20px;
+    border-bottom: 1px solid black;
+}
+
+#modal .modal-header button {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    top: -10px;
+    right: -10px;
+}
+
+#modal .modal-body h3 {
+    padding-left: 10px;
+
+}
+
+#modal .modal-body input {
+    width: 80%;
+    height: 10px;
+    padding: 10px 30px;
+}
+
+#modal .modal-body .Input {
+    padding-left: 10px;
+}
+
+#modal .modal-footer {
+    display: flex;
+    justify-content: end;
+    padding-right: 20px;
+    margin-top: 20px;
+}
+
+#modal .modal-footer button {
+    width: 60px;
+    height: 30px;
+}
+
+#modal .todo-group {
+    cursor: pointer;
+    overflow: scroll;
+}
+
+
+#modal .todo-input-group {
+    display: flex;
+
+}
+
+.todo-input-group .displayInput {
+    margin-top: 10px;
+    height: 8px;
+    padding: 10px 30px;
+    width: 80%;
+}
+
+#modal button {
+    margin: 10px;
+    width: 60px;
+    height: 30px;
+    border-radius: 10px;
+}
+
+.inputBox {
+    cursor: pointer;
+    overflow: scroll;
+}
+
+.overflow {
+    overflow: scroll;
+    padding-left: 0;
+    text-align: center;
+    width: 120px;
+    height: 50px;
+}
+.todoGroup{
+    padding-left: 0;
+}

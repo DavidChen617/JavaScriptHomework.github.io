@@ -1,0 +1,777 @@
+* {
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    list-style: none;
+}
+
+body {
+    padding: 0 100px;
+}
+
+
+.close-container {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 30px;
+    height: 30px;
+    background-color: #E8E8ED;
+    color: #6E6E73;
+    text-align: center;
+    line-height: 30px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.info-box {
+    width: 700px;
+    border: 1px solid black;
+    background-color: #FFFFFF;
+    padding: 50px;
+    margin: auto;
+    border-radius: 30px;
+    position: relative;
+}
+
+.info-box .info-title h2 {
+    font-size: 40px;
+    margin-bottom: 20px;
+}
+
+.info-box .info-title p {
+    margin-bottom: 30px;
+}
+
+.info-box .info-body {
+    line-height: 40px;
+}
+
+.info-box .info-body p {
+    padding-left: 30px;
+}
+
+.info-box .info-body h5 {
+    font-size: 20px;
+}
+
+.info-box .info-body h5:nth-of-type(1) {
+    display: inline;
+}
+
+.info-box .info-body h5:nth-of-type(1)+p {
+    display: inline;
+    padding-left: 0;
+}
+
+.info-box .info-Tail p {
+    font-size: 12px;
+}
+
+.info-box .info-footer {
+    background-color: #F5F5F7;
+    margin-top: 100px;
+    border-radius: 30px;
+    justify-content: center;
+
+}
+
+.info-box .info-footer .wrap {
+    width: fit-content;
+    margin: 40px auto;
+}
+
+.info-box .info-footer img {
+    border-radius: 100px;
+    background-color: #ADD8FF;
+    height: 70px;
+    margin-left: 18px;
+}
+
+.info-box .info-footer .wrap p {
+    color: #0167CC;
+    font-size: 12px;
+}
+
+
+/* 背景遮罩 */
+.modal {
+    display: none;
+    position: fixed;
+    top: 30px;
+    left: 0;
+
+    /* 背景變灰色 */
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: #ccc7
+}
+
+/* ============ */
+
+#carouselExampleControls {
+    width: 100%;
+}
+
+.carousel-inner-pc img {
+    border-radius: 30px;
+    width: 50%;
+}
+
+
+.select-color .colornav-item img {
+    cursor: pointer;
+}
+
+
+a {
+    text-decoration: none;
+}
+
+/* 針對所有 radio input 元素應用樣式 */
+input[type="radio"] {
+    display: none;
+}
+
+.header .menu a {
+    color: #f9f9f9;
+    text-decoration: none;
+}
+
+/* 漢堡選單按鈕樣式 */
+.menu-toggle {
+    display: none;
+    padding: 14px 20px;
+    color: #f9f9f9;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+
+.caoacity- {
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 30px;
+    margin: 5px;
+    cursor: pointer;
+    /* user-select: none; */
+    /* 防止選擇文字 */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+.caoacity-.active {
+    border: 2px solid blue;
+}
+
+.price-point-fullPrice-short {
+    font-weight: bold;
+}
+
+
+.buy-iphone-body-column-item-15Pro.active {
+    border: 2px solid blue;
+
+}
+
+.buy-iphone-body-column-item-15Pro {
+    display: flex;
+    border: 1px solid #ccc;
+    justify-content: space-between;
+    margin: 10px;
+    border-radius: 30px;
+    cursor: pointer;
+}
+
+.sticky .sticky-header-title {
+    margin-right: 80px;
+    padding-left: 20px;
+    align-content: center;
+}
+
+.sticky .sticky-header-price {
+    padding-right: 20px;
+    align-items: center;
+
+}
+
+
+.sticky .sticky-header-price::before {
+    position: absolute;
+    top: 10px;
+    width: 100%;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.sticky .sticky-header-price.show::before {
+    opacity: 1;
+
+    transform: translateY(0);
+
+}
+
+
+.right {
+    font-size: 10px;
+}
+
+.buy-iphone-body-column-support {
+    background-color: #F5F5F7;
+    margin: 30px 10px 10px 10px;
+    border-radius: 30px;
+    align-items: center;
+
+}
+
+.buy-iphone-body-column-support a {
+    color: #1D1D1F;
+    padding: 10px;
+}
+
+.buy-iphone-body-column-support div {
+    padding-left: 9px;
+}
+
+.select-color-title {
+    padding: 23px;
+}
+
+.select-color {
+
+    padding: 10px;
+}
+
+.select-color h6 {
+    margin-left: 15px;
+    margin-bottom: 20px;
+}
+
+.colornav-label {
+    visibility: hidden;
+}
+
+
+.colornav-item {
+    width: 50px;
+}
+
+
+.how-much-need {
+    background-color: #F5F5F7;
+    font-size: 12px;
+    margin: auto;
+    padding: 20px;
+    border-radius: 30px;
+    width: 94%;
+}
+
+.how-much-need a {
+    display: none;
+}
+
+.carousel-inner img {
+    width: 100%;
+}
+
+.buy-iphone-body-title {
+    margin: 20px 0;
+}
+
+.buy-iphone-body-title h2 {
+    color: #86868B;
+}
+
+.buy-iphone-body-title strong {
+    color: #1D1D1F;
+}
+
+/* ===== */
+
+
+/* 顏色選項 */
+
+
+img.color {
+    cursor: pointer;
+}
+
+img.color.active {
+    border-radius: 30px;
+
+    border: 3px solid blue;
+}
+
+
+.colornav-items {
+    display: flex;
+}
+
+.colornav-items li img {
+    width: 30px;
+}
+
+/* 換購計劃 */
+.buy-iphone-tail {
+    text-align: center;
+    height: 500px;
+
+}
+
+.buy-iphone-tail .exChangeplan,
+.no-exChange {
+    margin: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    align-content: center;
+}
+
+.exChangeplan-how-to-work {
+    background-color: #f1eaea;
+    margin: 10px;
+    padding: 10px;
+    font-size: 12px;
+    border-radius: 30px;
+    align-content: center;
+}
+
+
+.buy-iphone-tail-item .exChangeplan,
+.no-exChange {
+    border-radius: 30px;
+    border: 1px solid #ccc;
+}
+
+.buy-iphone-tail-title {
+    margin-left: 10px;
+}
+
+
+.disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+
+.buy-iphone-tail-item {
+    cursor: pointer;
+}
+
+
+/* ===== */
+
+.postalInput {
+    display: none;
+    width: 65%;
+    background-color: #FAFAFC;
+    border-radius: 30px;
+    padding: 20px;
+    margin-left: 5px;
+}
+
+.postalInput .row {
+    padding: 10px;
+    display: flex;
+    font-size: 12px;
+    color: #77777B;
+    justify-content: space-around;
+    /* border: 1px solid #fa0; */
+}
+
+.postalInput .row .input-wrap {
+    width: 100%;
+}
+
+.rf-tradeupinline-module-header {
+    font-size: 12px;
+    width: fit-content;
+    justify-content: start;
+    margin-left: 13px;
+}
+
+
+.form-input-group {
+    position: relative;
+}
+
+.input-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-label {
+    position: absolute;
+    left: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #aaa;
+    pointer-events: none;
+}
+
+.form-textbox-input {
+    padding-left: 100px;
+    border: 1px solid #ccc;
+    flex: 1;
+    height: 50px;
+    border-radius: 20px;
+}
+
+.form-textbox-button {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+
+}
+
+
+
+
+/* 響應式設置 */
+
+/* 桌機 */
+@media screen and (min-width:769px) {
+    .header {
+        display: flex;
+        width: 90%;
+        margin: auto;
+    }
+
+    .header div {
+        margin: 0 auto;
+    }
+
+    .menu-hb {
+        display: none;
+    }
+
+    /* =========== */
+    .sticky {
+        list-style-type: none;
+        overflow: hidden;
+        background-color: white;
+        position: -webkit-sticky;
+        /* Safari */
+        position: sticky;
+        z-index: 1;
+        top: 0;
+        opacity: 0;
+        transform: translateY(-100%);
+        transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+
+    .sticky.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+
+    .sticky .top {
+        display: flex;
+        justify-content: space-between;
+        padding: 0 40px;
+        border-bottom: 1px solid #ccc;
+    }
+
+    .sticky .top .right {
+        margin: auto 0;
+        font-size: 16px;
+    }
+
+    .sticky .button {
+        position: relative;
+        text-align: right;
+        display: flex;
+        padding: 0 40px;
+        margin-top: 15px;
+        border-bottom: 1px solid #ccc;
+    }
+
+
+    .button-border {
+        height: 60px;
+    }
+
+    .sticky .button .content {
+        display: flex;
+        position: absolute;
+        right: 40px;
+    }
+
+
+    /* ============ */
+
+    .buy-iphone-body {
+        display: flex;
+        margin: auto;
+        padding: 70px;
+        width: 100%;
+        margin-top: -100px;
+    }
+
+    .buy-iphone-body-column {
+
+        width: 40%;
+    }
+
+    .slideshow-pc {
+        width: 80%;
+    }
+
+}
+
+.buy-iphone-body-column-title {
+    display: none;
+}
+
+.buy-iphone h2 {
+    font-size: 42px;
+}
+
+.buy-inpone-header-discount a {
+    text-align: right;
+    padding: 10px;
+    margin: 10px 0;
+    display: block;
+    border-radius: 30px;
+    background-color: #F5F5F7;
+    color: #1D1D1F;
+    height: 40px;
+}
+
+.buy-inpone-header-title h2 {
+    margin-bottom: 20px;
+}
+
+.buy-iphone {
+    padding: 0 70px;
+    width: 100%;
+    margin: 30px auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.buy-inpone-header-discount p {
+    font-size: 12px;
+}
+
+
+
+.slideshow.phone {
+    display: none;
+}
+
+/* sticky 目標 */
+.slideshow-pc .carousel.slide {
+    position: sticky;
+    position: -webkit-sticky;
+    top: 90px;
+    padding-bottom: 10px;
+}
+
+.slideshow-pc .carousel.slide img {
+    width: 100%;
+    overflow: hidden;
+
+}
+
+.buy-iphone-body-column {
+    margin-top: 100px;
+    padding: 10px;
+}
+
+.buy-iphone-body-column-title {
+    margin-left: 12px;
+}
+
+.buy-iphone-body-column-items {
+    margin-top: 40px;
+}
+
+.buy-iphone-body-column-item-15Pro,
+.buy-iphone-body-column-item-15Pro.Max {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+.buy-iphone-body-column-item-15Pro .right,
+.buy-iphone-body-column-item-15Pro.Max .right {
+    padding: 20px;
+}
+
+.carousel-inner-pc img {
+    position: relative;
+}
+
+#carouselExampleControls {
+    overflow: hidden;
+
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    position: absolute;
+    bottom: -500%;
+}
+
+.buy-iphone-body-column-support {
+    width: 84%;
+}
+
+.buy-iphone-tail-item {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.buy-iphone-tail-item div {
+    height: 120px;
+}
+
+/* 顏色 */
+.colornav-items {
+    padding-left: 12px;
+}
+
+.how-much-storage-space h5 {
+    margin-bottom: 20px;
+    margin-left: 20px;
+}
+
+.buy-iphone-tail-title {
+    width: 40%;
+}
+
+.buy-iphone-tail-item .exChangeplan {
+    border-radius: 30px;
+}
+
+/* 手機 */
+@media screen and (max-width: 768px) {
+    .header {
+        display: flex;
+    }
+
+    .header .apple-icon {
+        margin-left: 20px;
+    }
+
+    .header .serach {
+        position: relative;
+        left: 250px;
+    }
+
+    .header .menu-hb {
+        position: relative;
+        left: 320px;
+        top: 10px
+    }
+
+    .header .link-bag {
+        position: relative;
+        left: 280px;
+    }
+
+    .buy-inpone-header-title .buy-iphone h2 {
+        margin-top: 20px;
+        font-size: 38px;
+    }
+
+    .buy-inpone-header-title span {
+        margin-left: 30px;
+    }
+
+
+    .buy-inpone-header-discount a {
+        padding: 15px;
+        margin: 10px 0;
+        display: block;
+        border-radius: 30px;
+        background-color: #F5F5F7;
+        color: #1D1D1F;
+        width: fit-content;
+        margin-left: 20px;
+    }
+
+    .buy-iphone-body-column-title {
+        padding-left: 20px;
+        margin: 30px 0;
+    }
+
+    .buy-iphone-body-column-items {
+        padding-left: 5px;
+    }
+
+    .buy-iphone-body-column-support {
+        margin-left: 20px;
+    }
+
+    .how-much-storage-space h5 {
+        margin-left: 20px;
+    }
+
+    .buy-iphone-tail .buy-iphone-tail-title {
+        width: 84%;
+        margin: 40px 0 20px 20px;
+    }
+
+    .carousel.slide {
+        padding: 20px;
+    }
+
+    .menu {
+        display: none;
+        width: 100%;
+        background-color: #333;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        z-index: 1;
+    }
+
+    .menu.active {
+        display: block;
+    }
+
+    .menu-toggle {
+        display: block;
+    }
+
+    .buy-inpone-header-title h2 {
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .sticky {
+        display: none;
+    }
+
+    .buy-iphone {
+        display: block;
+        padding: 0;
+    }
+
+    .buy-iphone-body-column-support {
+        width: 94%;
+    }
+
+    .buy-iphone-tail .buy-iphone-tail-item {
+        display: block;
+        padding: 10px;
+
+    }
+}

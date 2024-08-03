@@ -1,0 +1,927 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Buy Apple_HsinHan</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* utilities */
+    :root {
+      --apple-shop-medium-gray: #96868b;
+      --apple-shop-light-gray: #f5f5f7;
+      --apple-shop-focus: #0071e3;
+    }
+
+    * {
+      list-style: none;
+      font-family: "Lato", sans-serif;
+    }
+
+    .light {
+      color: var(--apple-shop-medium-gray);
+    }
+
+    .disabled {
+      opacity: 0.5;
+    }
+
+    .focused-box:not(.color) {
+      border: 2px solid var(--apple-shop-focus);
+    }
+
+
+    /* nav */
+    .navbar-toggler {
+      width: 20px;
+      height: 20px;
+      position: relative;
+      transition: .5s ease-in-out;
+      margin-bottom: -1.05px;
+      margin-left: 6px;
+    }
+
+    .navbar-toggler,
+    .navbar-toggler:focus,
+    .navbar-toggler:active,
+    .navbar-toggler-icons:focus {
+      outline: none;
+      box-shadow: none;
+      border: 0;
+    }
+
+
+    .navbar-toggler span {
+      margin: 0;
+      padding: 0;
+    }
+
+
+    .toggler-icon {
+      display: block;
+      position: absolute;
+      height: 1.8px;
+      width: 45%;
+      background: #000;
+      border-radius: 5px;
+      opacity: .8;
+      left: 0;
+      transform: rotate(0deg);
+      transition: .25s ease-in-out;
+    }
+
+    .navbar-toggler .top-bar {
+      margin-top: 0px;
+      transform: rotate(135deg);
+    }
+
+    .navbar-toggler .bottom-bar {
+      margin-top: 0px;
+      transform: rotate(-135deg);
+    }
+
+    .navbar-toggler.collapsed .top-bar {
+      margin-top: -6px;
+      transform: rotate(0deg);
+    }
+
+
+    .navbar-toggler.collapsed .bottom-bar {
+      margin-top: 6px;
+      transform: rotate(0deg);
+    }
+
+    .nav-link {
+      padding: 8px;
+      font-size: 12px;
+    }
+
+    .nav-link:not(.active) {
+      color: #aaa;
+    }
+
+    .navbar-brand,
+    .nav-bar-icon {
+      scale: 0.9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 16px;
+      margin: auto 8px;
+    }
+
+    .nav-bar-icon img {
+      vertical-align: top;
+    }
+
+    nav {
+      max-width: 800px;
+    }
+
+    /* main-section */
+    .shop-main,
+    .shop-title,
+    .purchase-container {
+      max-width: 1500px;
+    }
+
+    .shop-title p {
+      font-size: 9px;
+    }
+
+    .shop-title-sticky {
+      position: fixed;
+      top: 0;
+      border-bottom: 1.5px solid #ccc;
+    }
+
+    .shop-title-sticky h1 {
+      font-size: 18px;
+    }
+
+    .shop-title-sticky p {
+      font-size: 13px;
+      font-weight: 700;
+    }
+
+    .carousel-inner img {
+      border-radius: 10px;
+    }
+
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+      background-color: #333;
+      border-radius: 50%;
+      filter: invert(100%);
+      background-size: 50%, 50%;
+      scale: 1.5;
+    }
+
+    .spec-selection h2 {
+      font-size: 18px;
+    }
+
+    .carousel-indicators .indicator-btn {
+      width: .5em;
+      height: .5em;
+      border-radius: 50%;
+      background-color: #000;
+      position: relative;
+      top: 50px;
+    }
+
+    @media screen and (min-width: 768px) {
+
+      .nav-link {
+        font-size: 13px;
+      }
+
+      .shop-title-sticky h1 {
+        font-size: 22px;
+      }
+
+      .shop-title-sticky p {
+        font-size: 15.5px;
+      }
+
+      .carousel-container {
+        height: 132vh;
+      }
+
+      .gallery-carousel {
+        height: 75vh;
+        min-width: 650px;
+        position: sticky;
+        top: 10vh;
+      }
+
+      .carousel-inner img {
+        object-fit: cover;
+        height: 75vh;
+      }
+
+      .spec-selection {
+        min-width: 400px;
+      }
+
+      .carousel-indicators .indicator-btn {
+        top: 0px;
+      }
+
+      .spec-selection h2 {
+        font-size: 22px;
+      }
+    }
+
+    .select-box:not(.color) {
+      padding: 20px;
+      border-radius: 13px;
+    }
+
+    .select-box:not(.focused-box, .color) {
+      border: 1px solid var(--apple-shop-medium-gray);
+    }
+
+
+
+    .select-box:hover:not(.disabled) {
+      cursor: pointer;
+    }
+
+    .select-box h3 {
+      font-size: 16px;
+    }
+
+    .select-box .description {
+      font-size: 10px;
+    }
+
+    .select-box .price-text {
+      font-size: 13px;
+    }
+
+    .select-help-box {
+      padding: 15px;
+      border-radius: 13px;
+      background-color: var(--apple-shop-light-gray);
+      font-size: 12px;
+      margin-bottom: 5vh;
+    }
+
+    .select-help-box:last-child {
+      margin-bottom: 8vh;
+    }
+
+    .plus-icon {
+      width: 1.2em;
+      height: 1.2em;
+      top: 15px;
+      right: 15px;
+      border-radius: 50%;
+      border: 1px solid #000;
+    }
+
+    @media screen and (min-width: 768px) {
+      .select-box h3 {
+        font-size: 18px;
+      }
+
+      .select-box .description {
+        font-size: 12px;
+      }
+
+      .select-box .price-text {
+        font-size: 14px;
+      }
+
+
+      .select-help-box {
+        margin-bottom: 15vh;
+      }
+    }
+
+    .color-text {
+      font-size: 14px;
+    }
+
+    .color-choice {
+      margin-bottom: 10vh;
+      height: 40px;
+    }
+
+    .color-choice .color {
+      width: 25px;
+      height: 25px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .color-choice .color:hover:not(.disabled) {
+      cursor: pointer;
+    }
+
+    .color-choice .focused-box::before {
+      content: '';
+      position: absolute;
+      width: 37px;
+      height: 37px;
+      border: 5px double var(--apple-shop-focus);
+      border-radius: 50%;
+    }
+
+    @media screen and (min-width: 768px) {
+      .color-text {
+        font-size: 16px;
+      }
+
+      .color-choice {
+        margin-bottom: 23vh;
+      }
+    }
+
+    .select-box.storage {
+      padding: 30px 20px;
+    }
+
+    .select-box.storage h2 {
+      font-size: 12px;
+    }
+
+    .select-box.storage .capacity {
+      font-size: 17.5px;
+    }
+
+    @media screen and (min-width: 768px) {
+      .select-box.storage h2 {
+        font-size: 14px;
+      }
+
+      .select-box.storage .capacity {
+        font-size: 20px;
+      }
+    }
+
+    .purchase {
+      background-color: var(--apple-shop-light-gray);
+    }
+
+    .purchase-head {
+      max-height: 370px;
+      overflow: hidden;
+    }
+
+    @media screen and (max-width: 767px) {
+      .purchase-head h2 {
+        font-size: 24px;
+      }
+    }
+
+    .purchase-product-image img {
+      width: 450px;
+      max-width: 85%;
+      max-height: 50%;
+      object-fit: cover;
+    }
+
+    .purchase-info h4 {
+      font-size: 20px;
+    }
+
+    .purchase-info .pricing {
+      font-size: 22px;
+      /* color: var(--apple-shop-focus); */
+      font-weight: 700;
+      ;
+    }
+
+    .purchase-info .include-vat {
+      font-size: 12.5px;
+      margin-bottom: 40px;
+    }
+
+    .add-to-cart {
+      width: 150px;
+      font-size: 14px;
+      margin-bottom: 12px;
+    }
+
+    @media screen and (min-width: 768px) {
+      .purchase-info h4 {
+        font-size: 24px;
+      }
+
+      .purchase-info .pricing {
+        font-size: 30px;
+      }
+    }
+
+    .packaging-field {
+      margin: auto;
+      overflow: hidden;
+      margin-top: 60px;
+    }
+
+    .packaging-field .packaging-content {
+      background-color: #fbfbfd;
+    }
+
+    .packaging-field .packaging-description {
+      gap: 25%;
+    }
+
+    .packaging-field img {
+      height: 300px;
+    }
+
+    .packaging-content p {
+      font-size: 12px;
+      margin-top: 15px;
+    }
+
+    @media screen and (min-width:768px) {
+      .packaging-field {
+        width: 50%;
+      }
+
+      .packaging-content p {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <header class="page-header d-flex align-items-center">
+    <nav class="navbar navbar-expand-sm bg-white w-100 p-0 mx-auto mt-2 mt-sm-0">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#"><img src="apple_imgs/icons/apple.svg" alt=""></a>
+        <a class="nav-bar-icon d-sm-none ms-auto"><img src="apple_imgs/icons/search.svg" alt=""></a>
+        <a class="nav-bar-icon d-sm-none me-2"><img src="apple_imgs/icons/bag.svg" alt=""></a>
+        <button class="navbar-toggler collapsed d-flex d-sm-none flex-column justify-content-around" type="button"
+          data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+          aria-expanded="false" aria-label="Toggle navigation">
+          <span class="toggler-icon top-bar"></span>
+          <span class="toggler-icon bottom-bar"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav m-auto d-flex gap-md-3">
+            <li class="nav-item">
+              <div class="nav-link">Store</div>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active iphone-link" href="#">iPhone</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active ipad-link" href="#">iPad</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Mac</a>
+            </li>
+            <li class="nav-item">
+              <div class="nav-link">Watch</div>
+            </li>
+            <li class="nav-item">
+              <div class="nav-link">Vision</div>
+            </li>
+            <li class="nav-item">
+              <div class="nav-link">Airpods</div>
+            </li>
+            <li class="nav-item">
+              <div class="nav-link">TV & Home</div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <a class="nav-bar-icon d-none d-sm-block"><img src="apple_imgs/icons/search.svg" alt=""></a>
+      <a class="nav-bar-icon d-none d-sm-block "><img src="apple_imgs/icons/bag.svg" alt=""></a>
+  </header>
+
+  <main class="mx-auto col-sm-6 w-100 position-relative">
+    <section class="shop-title mx-auto px-3 px-sm-4">
+      <h1 class="fs-1 fw-bold mt-4">購買<span class="selected-model"></span></h1>
+      <p class="fs-6">NT$<span class="price selected-price"></span>起</p>
+      </div>
+    </section>
+    <section
+      class="shop-title-sticky bg-white d-flex align-items-center justify-content-between pt-3 pb-1 z-3 d-none px-3 w-100">
+      <h1 class="fw-bolder selected-model"></h1>
+      <p class="mb-2">NT$<span class="price selected-price"></span>起
+      </p>
+    </section>
+
+    <section class="shop-main d-md-flex gap-md-4 mx-auto px-3 px-sm-4">
+      <div class="carousel-container position-relative">
+        <div id="carouselIndicators" class="gallery-carousel carousel slide flex-sm-grow-1">
+          <template id="indicator-button-template">
+            <button type="button" data-bs-target="#carouselIndicators" data-bs-slide-to="" class="indicator-btn mx-2"
+              aria-label=""></button>
+          </template>
+          <div class="carousel-indicators">
+          </div>
+          <div class="carousel-inner">
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselIndicators" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselIndicators" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+      </div>
+      <div class="spec-selection px-3">
+        <div class="model-selection selection-block">
+          <h2 class="fw-bold mt-5 mt-md-0 mb-4">機型。<span class="light">哪一款最適合你?</span></h2>
+
+          <template id="model-select-box-template">
+            <div class="select-box d-flex align-items-center justify-content-between my-3">
+              <div>
+                <h3 class="model-name fw-bold"></h3>
+                <div class="screen description light"></div>
+              </div>
+              <div class="price-text">
+                NT$<span class="price-floor"></span>起
+              </div>
+            </div>
+          </template>
+        </div>
+        <div class="select-help-box position-relative mt-3">
+          <p class="fw-bold my-1">需要選購機型的協助?</p>
+          <p class="m-0">探索螢幕尺寸與電池續航力的差異</p>
+          <div class="plus-icon position-absolute d-flex justify-content-center align-items-center">+</div>
+        </div>
+        <div class="color-selection selection-block">
+          <h2 class="fw-bold mt-5 mt-md-0 mb-4">外觀。<span class="light">挑選你喜愛的外觀</span></h2>
+          <h3 class="color-text fw-bolder mb-3 mb-md-4 mt-md-5">顏色<span class="selected-color"></span></h3>
+          <div class="color-choice d-flex align-items-center gap-3">
+          </div>
+        </div>
+        <div class="storage-selection selection-block">
+          <h2 class="fw-bold mt-5 mt-md-0 mb-4">儲存裝置。<span class="light">你需要多少儲存空間?</span></h2>
+
+          <template id="storage-select-box-template">
+            <div class="select-box storage d-flex align-items-center justify-content-between my-3 disabled">
+              <h2 class="fw-bold m-0"><span class="capacity"></span> GB</h2>
+              <div class="price-text m-0">
+                NT$<span class="price"></span>起
+              </div>
+            </div>
+          </template>
+        </div>
+        <div class="select-help-box position-relative mt-3">
+          <p class="fw-bold my-1">不確定需要多少儲存空間?</p>
+          <p class="m-0">讓我們幫你更清楚了解你所需的空間</p>
+          <div class="plus-icon position-absolute d-flex justify-content-center align-items-center">+</div>
+        </div>
+      </div>
+    </section>
+    <section class="purchase mb-3">
+      <div class="purchase-container  d-column-reverse d-md-flex px-3  w-100 mx-auto pt-5">
+        <div class="purchase-head col-md-7 h-100 ">
+          <h2>你的全新
+            <span class="selected-model"></span>。<br>
+            <span class="light">依你的需求量身打造</span>
+          </h2>
+          <div class="purchase-product-image pt-4">
+            <img class="cart-image" alt="">
+          </div>
+        </div>
+        <div class="purchase-info col-md-5">
+          <h4 class="mt-5">
+            <span class="selected-model"></span>
+            <span class="selected-storage"></span>GB
+            <span class="selected-color init-color"></span>
+          </h4>
+          <p class="pricing mt-3">NT<span class="price selected-price"></span></p>
+          <p class="include-vat light">含加值型營業稅:約 NT$<span class="vat"></span>。</p>
+          <button class="add-to-cart btn btn-primary mt-auto">加入購物車</button>
+        </div>
+      </div>
+    </section>
+    <section class="packaging-field ">
+      <h2 class="text-center fw-bold my-4">包裝盒內容</h2>
+      <div class="packaging-content d-md-flex justify-content-around">
+
+        <template id="packaging-item-template">
+          <div class="accessories d-flex flex-column align-items-center">
+            <img src="apple_imgs/packaging/iphone-15-blue_packaging.jpg" alt="">
+            <p></p>
+          </div>
+        </template>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+  <script type="module" src="apple.js"></script>
+  <script src="scroll_controller.js"></script>
+  <script>import {
+      renderGalleryImages,
+      renderPrice,
+      renderVAT,
+      renderStorage,
+      renderCartImage,
+      renderPackaging,
+    } from "./rendering.js";
+
+    const specSelect = document.querySelector(".spec-selection");
+    const modelSelect = document.querySelector(".model-selection");
+    const colorSelect = document.querySelector(".color-selection");
+    const storageSelect = document.querySelector(".storage-selection");
+    let selectedModel;
+    let selectedColor;
+    let selectedStorage;
+    let selectedPrice;
+    let data;
+
+    let dataUrl = "iphone_data.json";
+    async function fetchData(url) {
+      return await fetch(url).then((res) => res.json());
+    }
+    window.addEventListener("load", initPage);
+    function triggerLoadEvent() {
+      let loadEvent = new Event("load");
+      window.dispatchEvent(loadEvent);
+    }
+
+    document.querySelector(".ipad-link").addEventListener("click", () => {
+      dataUrl = "ipad_data.json";
+      resetPage();
+      document.querySelector(".packaging-field .packaging-content").style[
+        "background-color"
+      ] = "#f5f5f7";
+      triggerLoadEvent();
+    });
+
+    document.querySelector(".iphone-link").addEventListener("click", () => {
+      dataUrl = "iphone_data.json";
+      resetPage();
+      document.querySelector(".packaging-field .packaging-content").style[
+        "background-color"
+      ] = "#fbfbfd";
+      triggerLoadEvent();
+    });
+
+    //add button focus effect
+    specSelect.addEventListener(
+      "click",
+      (e) => {
+        if (
+          e.target.closest(".select-box") &&
+          !e.target.classList.contains("disabled")
+        ) {
+          e.target
+            .closest(".selection-block")
+            .querySelectorAll(".select-box")
+            .forEach((selectBox) => {
+              selectBox.classList.toggle(
+                "focused-box",
+                selectBox === e.target.closest(".select-box")
+              );
+            });
+        }
+      },
+      true
+    );
+
+    //handle models info
+    modelSelect.addEventListener("click", (e) => {
+      if (e.target.closest(".select-box")) {
+        selectedModel = e.target
+          .closest(".select-box")
+          .querySelector(".model-name").textContent;
+
+        //update gallery images
+        const colorSelectBoxes = Array.from(
+          document.querySelectorAll(".color-choice .select-box")
+        );
+        if (e.target.closest(".select-box").classList.contains("focused-box")) {
+          if (
+            !colorSelectBoxes.some((box) => box.classList.contains("focused-box")) //while no color box has been selected
+          ) {
+            const imgs = data.find(
+              (data) => data.model === selectedModel
+            ).galleryImages;
+            renderGalleryImages(imgs);
+          } else {
+            const imgs = getModelColorObject(selectedColor).galleryImages;
+            renderGalleryImages(imgs);
+          }
+        }
+
+        //update selected model
+        document
+          .querySelectorAll(".selected-model")
+          .forEach((model) => (model.textContent = selectedModel));
+        document.querySelector(".accessories p").textContent = selectedModel;
+
+        //update price
+        if (!selectedStorage) {
+          selectedPrice = e.target
+            .closest(".select-box")
+            .querySelector(".price-floor").textContent;
+        } else {
+          selectedPrice = getModelColorStorageObject(
+            selectedColor,
+            selectedStorage
+          ).priceNTD;
+        }
+        updateStorageBoxPrice(selectedModel);
+        renderPrice(selectedPrice);
+        renderVAT();
+
+        // enable color selection after model selected
+        colorSelect.querySelectorAll(".select-box").forEach((colorBox) => {
+          if (colorBox.classList.contains("disabled")) {
+            colorBox.classList.remove("disabled");
+          }
+        });
+      }
+    });
+
+    //handle colors info
+    let objOfTargetColor;
+    let selectedColorZH;
+    let tempColorZH;
+
+    colorSelect.addEventListener("click", (e) => {
+      if (
+        e.target.closest(".select-box") &&
+        !e.target.classList.contains("disabled")
+      ) {
+        selectedColor = e.target.closest(".select-box").getAttribute("color");
+        objOfTargetColor = getModelColorObject(selectedColor);
+        if (objOfTargetColor) {
+          selectedColorZH = objOfTargetColor.colorZH;
+          document.querySelector(
+            ".selected-color:not(.init-color)"
+          ).textContent = ` - ${selectedColorZH}`;
+        }
+        document.querySelector(".init-color").textContent = selectedColorZH;
+
+        const imgs = objOfTargetColor.galleryImages;
+        renderGalleryImages(imgs);
+        renderCartImage(objOfTargetColor);
+        renderPackaging(objOfTargetColor);
+
+        //enable storage selection
+        storageSelect.querySelectorAll(".select-box").forEach((storageBox) => {
+          if (storageBox.classList.contains("disabled")) {
+            storageBox.classList.remove("disabled");
+          }
+        });
+      }
+    });
+
+    colorSelect.addEventListener("mouseover", (e) => {
+      if (
+        e.target.closest(".select-box") &&
+        !e.target.classList.contains("disabled")
+      ) {
+        const tempColor = e.target.closest(".select-box").getAttribute("color");
+        objOfTargetColor = getModelColorObject(tempColor);
+        if (objOfTargetColor) {
+          tempColorZH = objOfTargetColor.colorZH;
+          document.querySelector(
+            ".selected-color:not(.init-color)"
+          ).textContent = ` - ${tempColorZH}`;
+        }
+      }
+    });
+
+    colorSelect.addEventListener("mouseout", (e) => {
+      document.querySelector(".selected-color:not(.init-color)").textContent =
+        selectedColorZH ? ` - ${selectedColorZH}` : "";
+    });
+
+    //handle storage info
+    storageSelect.addEventListener("click", (e) => {
+      if (
+        e.target.closest(".select-box") &&
+        !e.target.closest(".select-box").classList.contains("disabled")
+      ) {
+        selectedStorage = e.target
+          .closest(".select-box")
+          .querySelector(".capacity").textContent;
+        const obj = getModelColorStorageObject(selectedColor, selectedStorage);
+        selectedPrice = obj.priceNTD;
+        renderStorage(selectedStorage);
+        renderPrice(selectedPrice);
+        renderVAT();
+      }
+    });
+
+    function getModelColorObject(color) {
+      return data
+        .find((data) => data.model === selectedModel)
+        .specifications.find((spec) => spec.color === color);
+    }
+
+    function getModelColorStorageObject(color, storage) {
+      return data
+        .find((data) => data.model === selectedModel)
+        .specifications.find(
+          (spec) => spec.color === color && spec.storageGB == selectedStorage
+        );
+    }
+
+    function updateStorageBoxPrice(selectedModel) {
+      const modelObj = data.find((data) => data.model === selectedModel);
+      for (let i = 0; i < modelObj.storagesGB.length; i++) {
+        const price = modelObj.specifications.find(
+          (spec) => spec.storageGB == modelObj.storagesGB[i]
+        ).priceNTD;
+        storageSelect.querySelector(
+          `.select-box:nth-of-type(${i + 1}) .price`
+        ).textContent = price;
+      }
+    }
+
+    async function initPage() {
+      data = await fetchData(dataUrl);
+
+      // initCarousel
+      const initImages = data[0].initialGalleryImages;
+      renderGalleryImages(initImages);
+
+      // initModelSelectBlock();
+      const modelChoices = data.length;
+      const modelSelectBoxTemplate = document.querySelector(
+        "#model-select-box-template"
+      );
+      for (let i = 0; i < modelChoices; i++) {
+        const clone = document.importNode(modelSelectBoxTemplate.content, true);
+        clone.querySelector(".model-name").textContent = data[i].model;
+        clone.querySelector(".screen").textContent = data[i].screen;
+        clone.querySelector(".price-floor").textContent = data[i].priceFloorNTD;
+        document.querySelector(".model-selection").append(clone);
+      }
+
+      // initColorSelectBlock();
+      const colorChoiceBlock = document.querySelector(".color-choice");
+      const colors = data[0].colors;
+      for (let i = 0; i < colors.length; i++) {
+        const [key, value] = Object.entries(colors[i]);
+        colorChoiceBlock.innerHTML += `<div class="color select-box disabled" style="background-color:${key[1]}"; color="${key[0]}"></div>`;
+      }
+
+      // initStorageSelectBox();
+      const storageChoices = data[0].storagesGB.length;
+      const storageSelectBoxTemplate = document.querySelector(
+        "#storage-select-box-template"
+      );
+      for (let i = 0; i < storageChoices; i++) {
+        const clone = document.importNode(storageSelectBoxTemplate.content, true);
+        clone.querySelector(".capacity").textContent = data[0].storagesGB[i];
+        clone.querySelector(".price").textContent = data[0].specifications.find(
+          (spec) => spec.storageGB === data[0].storagesGB[i]
+        ).priceNTD;
+        document.querySelector(".storage-selection").append(clone);
+      }
+
+      //fill in default price
+      document.querySelectorAll(".selected-price").forEach((initPrice) => {
+        initPrice.textContent = data[0].priceFloorNTD;
+      });
+
+      //fill in VAT
+      renderVAT();
+
+      //fill in default model
+      document
+        .querySelectorAll(".selected-model")
+        .forEach((model) => (model.textContent = data[0].model));
+      // fill in default color
+      document.querySelector(".init-color").textContent =
+        data[0].specifications[0].colorZH;
+      //fill in default storage
+      document.querySelector(".selected-storage").textContent =
+        data[0].storagesGB[0];
+
+      //init car image
+      document.querySelector(".cart-image").src =
+        data[0].specifications[0].cartImage;
+
+      //init packaging
+      const packagingItemsCount = data[0].packagingItems.length;
+      const packagingItemTemplate = document.querySelector(
+        "#packaging-item-template"
+      );
+
+      for (let i = 0; i < packagingItemsCount; i++) {
+        const clone = document.importNode(packagingItemTemplate.content, true);
+        clone.querySelector("img").src =
+          data[0].specifications[0].packagingImage[i];
+        clone.querySelector("p").textContent = data[0].packagingItems[i];
+        document.querySelector(".packaging-content").append(clone);
+      }
+    }
+
+    function resetPage() {
+      document.querySelectorAll(".select-box").forEach((box) => box.remove());
+      document
+        .querySelectorAll(".accessories")
+        .forEach((accessory) => accessory.remove());
+      document.querySelector(".color-selection .selected-color").textContent = "";
+      selectedStorage = null;
+      selectedColorZH = null;
+    }
+  </script>
+</body>
+
+</html>
